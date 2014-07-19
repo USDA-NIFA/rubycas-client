@@ -17,8 +17,6 @@ class CasProxyCallbackController < ActionController::Base
     # To accomodate this, we check for both parameters, although 'pgt' takes precedence over 'pgtId'.
     pgtId = params['pgt'] || params['pgtId']
     
-    log.error "CASProxyCallbackController #{pgtId} #{pgtIou}"
-    
     # We need to render a response with HTTP status code 200 when no pgtIou/pgtId is specified because CAS seems first
     # call the action without any parameters (maybe to check if the server responds correctly)
     render :text => "Okay, the server is up, but please specify a pgtIou and pgtId." and return unless pgtIou and pgtId
