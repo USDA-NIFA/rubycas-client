@@ -72,7 +72,7 @@ module CASClient
         def initialize(config={})
           config ||= {}
           #default_tmp_dir = defined?(Rails.root) ? "#{Rails.root}/tmp" : "#{Dir.pwd}/tmp"
-          default_tmp_dir = '/tmp/sessions/lmd_bix'
+          default_tmp_dir = '/tmp/sessions/portal'
           @tmp_dir = config[:storage_dir] || default_tmp_dir
           @service_session_lookup_dir = config[:service_session_lookup_dir] || "#{@tmp_dir}/sessions"
           @pgt_store_path = config[:pgt_store_path] || "#{@tmp_dir}/cas_pgt.pstore"
