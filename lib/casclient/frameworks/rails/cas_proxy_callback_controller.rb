@@ -41,6 +41,6 @@ class CasProxyCallbackController < ActionController::Base
     end
     
     def open_pstore
-      PStore.new("/tmp/sessions/lmd_bix/cas_pgt.pstore")
+      PStore.new("/tmp/sessions/reeport/cas_pgt.pstore")
     end
 end
