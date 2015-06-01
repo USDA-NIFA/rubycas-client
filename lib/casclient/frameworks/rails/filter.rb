@@ -2,7 +2,7 @@ module CASClient
   module Frameworks
     module Rails
       class Filter
-        cattr_reader :config, :log, :client, :fake_user, :fake_extra_attribues, :localhost_auth_actions, :trusted_ip_actions
+        cattr_reader :config, :log, :client, :fake_user, :fake_extra_attribues
         
         # These are initialized when you call configure.
         @@config = nil
@@ -10,8 +10,6 @@ module CASClient
         @@log = nil
         @@fake_user = nil
         @@fake_extra_attributes = nil
-        @@localhost_auth_actions = nil
-        @@trusted_ip_actions
         
         def self.before(controller)
           self.filter controller
@@ -28,25 +26,6 @@ module CASClient
               return true
             end
             
-            #FRE-84
-            #Following 2 if blocks have been copied over from the legacy(REEport 2.6 and before) casclient plugin
-            
-            #REEport324
-            #calling these actions from localhost (via rake task) should be authorized
-            if "appvm-reeport localhost" =~ /#{controller.request.host}/ 
-              if (@@config[:localhost_auth_actions].include?("#{controller.params['controller']}/#{controller.params['action']}"))
-                controller.session[:cas_user]='etl@nifa.usda.gov'
-                return true
-              end
-            end
-
-            if @@trusted_ip_actions[:trusted_ip]  =~ /#{controller.request.remote_ip}/
-              if (@@trusted_ip_actions[:actions].include?("#{controller.params['controller']}/#{controller.params['action']}"))
-                controller.session[:cas_user]='etl@nifa.usda.gov'
-                return true
-              end
-	          end
-	    
             last_st = controller.session[:cas_last_valid_ticket]
             last_st_service = controller.session[:cas_last_valid_ticket_service]
             
